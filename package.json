@@ -1,6 +1,6 @@
 {
   "name": "syfin-nftmarket",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "private": true,
   "proxy": "https://nft.sy.finance/api",
   "dependencies": {
