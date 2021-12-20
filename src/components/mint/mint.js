@@ -7,6 +7,8 @@ import LoadingOverlay from 'react-loading-overlay';
 
 import ReactCanvasConfetti from 'react-canvas-confetti';
 
+import * as imageConversion from 'image-conversion';
+
 import axios from 'axios';
 
 import Web3 from 'web3';
@@ -23,63 +25,132 @@ const canvasStyles = {
 
 class Mint extends Component {
     twoCalls = e => {
-        this.setState({ new_image: e.target.files[0] })
-        document.getElementById('fileupload').innerText = e.target.files[0].name;
 
         console.log(e.target.files[0])
 
-        var blob = e.target.files[0]; // See step 1 above
-        var fileReader = new FileReader();
-        fileReader.onloadend = function(evt) {
-          var arr = (new Uint8Array(evt.target.result)).subarray(0, 4);
-          var header = "";
-          for(var i = 0; i < arr.length; i++) {
-             header += arr[i].toString(16);
-          }
-          // console.log(header);
+        if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+            var compressmodel = document.getElementById('compressing');
+            compressmodel.style.display = 'block';
+            // Compress the NFT 512kb if png/jpeg/gif
+            imageConversion.compressAccurately(e.target.files[0], 512).then(async res=>{
+                //The res in the promise is a compressed Blob type (which can be treated as a File type) file;
+                console.log("Compressed", res);
+                compressmodel.style.display = 'none';
 
-          document.getElementById('uplabel').innerText = e.target.files[0].name;
-        
-          // Check the file signature against known types
-          // 676c5446 is glb model (gltf-binary)
+                this.setState({ new_image: res })
 
-          if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg' || e.target.files[0].type === 'image/gif') {
-            var outputmodel = document.getElementById('outputmodel');
-                outputmodel.style.display = 'none';
-                var outputvideo = document.getElementById('outputvideo');
-                outputvideo.style.display = 'none';
-                var output = document.getElementById('output');
-                var div = document.getElementById('wrapperdiv');
-                div.style.display = 'block';
-                output.style.display = 'block';
-                var mainfile = URL.createObjectURL(e.target.files[0]);
-                output.src = mainfile;
-            } else if (e.target.files[0].type === 'video/mp4') {
+                document.getElementById('fileupload').innerText = e.target.files[0].name;
+
+                var blob = res; // See step 1 above
+                var fileReader = new FileReader();
+                fileReader.onloadend = function(evt) {
+                var arr = (new Uint8Array(evt.target.result)).subarray(0, 4);
+                var header = "";
+                for(var i = 0; i < arr.length; i++) {
+                    header += arr[i].toString(16);
+                }
+                // console.log(header);
+    
+                document.getElementById('uplabel').innerText = e.target.files[0].name;
+                
+                // Check the file signature against known types
+                // 676c5446 is glb model (gltf-binary)
+    
+                if (res.type === 'image/png' || res.type === 'image/jpeg' || res.type === 'image/gif') {
+                    var outputmodel = document.getElementById('outputmodel');
+                        outputmodel.style.display = 'none';
+                        var outputvideo = document.getElementById('outputvideo');
+                        outputvideo.style.display = 'none';
+                        var output = document.getElementById('output');
+                        var div = document.getElementById('wrapperdiv');
+                        div.style.display = 'block';
+                        output.style.display = 'block';
+                        var mainfile = URL.createObjectURL(res);
+                        output.src = mainfile;
+                    } else if (res.type === 'video/mp4') {
+                        var outputmodel = document.getElementById('outputmodel');
+                        outputmodel.style.display = 'none';
+                        var output = document.getElementById('output');
+                        output.style.display = 'none';
+                        var outputvideo = document.getElementById('outputvideo');
+                        var div = document.getElementById('wrapperdiv');
+                        div.style.display = 'block';
+                        outputvideo.style.display = 'block';
+                        var mainfile = URL.createObjectURL(res);
+                        outputvideo.src = mainfile;
+                    } else if (header === '676c5446') {
+                        var output = document.getElementById('output');
+                        output.style.display = 'none';
+                        var outputvideo = document.getElementById('outputvideo');
+                        outputvideo.style.display = 'none';
+                        var outputmodel = document.getElementById('outputmodel');
+                        var div = document.getElementById('wrapperdiv');
+                        div.style.display = 'block';
+                        outputmodel.style.display = 'block';
+                    var mainfile = URL.createObjectURL(res);
+                    outputmodel.src = mainfile;
+                }
+                
+                };
+                fileReader.readAsArrayBuffer(blob);
+
+            });
+        } else {
+            this.setState({ new_image: e.target.files[0] });
+            document.getElementById('fileupload').innerText = e.target.files[0].name;
+            var blob = e.target.files[0]; // See step 1 above
+            var fileReader = new FileReader();
+            fileReader.onloadend = function(evt) {
+            var arr = (new Uint8Array(evt.target.result)).subarray(0, 4);
+            var header = "";
+            for(var i = 0; i < arr.length; i++) {
+                header += arr[i].toString(16);
+            }
+            // console.log(header);
+
+            document.getElementById('uplabel').innerText = e.target.files[0].name;
+            
+            // Check the file signature against known types
+            // 676c5446 is glb model (gltf-binary)
+
+            if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg' || e.target.files[0].type === 'image/gif') {
                 var outputmodel = document.getElementById('outputmodel');
-                outputmodel.style.display = 'none';
-                var output = document.getElementById('output');
-                output.style.display = 'none';
-                var outputvideo = document.getElementById('outputvideo');
-                var div = document.getElementById('wrapperdiv');
-                div.style.display = 'block';
-                outputvideo.style.display = 'block';
+                    outputmodel.style.display = 'none';
+                    var outputvideo = document.getElementById('outputvideo');
+                    outputvideo.style.display = 'none';
+                    var output = document.getElementById('output');
+                    var div = document.getElementById('wrapperdiv');
+                    div.style.display = 'block';
+                    output.style.display = 'block';
+                    var mainfile = URL.createObjectURL(e.target.files[0]);
+                    output.src = mainfile;
+                } else if (e.target.files[0].type === 'video/mp4') {
+                    var outputmodel = document.getElementById('outputmodel');
+                    outputmodel.style.display = 'none';
+                    var output = document.getElementById('output');
+                    output.style.display = 'none';
+                    var outputvideo = document.getElementById('outputvideo');
+                    var div = document.getElementById('wrapperdiv');
+                    div.style.display = 'block';
+                    outputvideo.style.display = 'block';
+                    var mainfile = URL.createObjectURL(e.target.files[0]);
+                    outputvideo.src = mainfile;
+                } else if (header === '676c5446') {
+                    var output = document.getElementById('output');
+                    output.style.display = 'none';
+                    var outputvideo = document.getElementById('outputvideo');
+                    outputvideo.style.display = 'none';
+                    var outputmodel = document.getElementById('outputmodel');
+                    var div = document.getElementById('wrapperdiv');
+                    div.style.display = 'block';
+                    outputmodel.style.display = 'block';
                 var mainfile = URL.createObjectURL(e.target.files[0]);
-                outputvideo.src = mainfile;
-            } else if (header === '676c5446') {
-                var output = document.getElementById('output');
-                output.style.display = 'none';
-                var outputvideo = document.getElementById('outputvideo');
-                outputvideo.style.display = 'none';
-                var outputmodel = document.getElementById('outputmodel');
-                var div = document.getElementById('wrapperdiv');
-                div.style.display = 'block';
-                outputmodel.style.display = 'block';
-            var mainfile = URL.createObjectURL(e.target.files[0]);
-            outputmodel.src = mainfile;
+                outputmodel.src = mainfile;
+            }
+            
+            };
+            fileReader.readAsArrayBuffer(blob);
         }
-        
-        };
-        fileReader.readAsArrayBuffer(blob);
 
     }
     
@@ -119,7 +190,7 @@ class Mint extends Component {
                             <div className="form-container">
                                 <div className="row">
                                 <div className="col-md-6 align-middle my-auto">
-                                <p className="text-secondary align-middle my-auto" style={{backgroundColor: "#000", width:"100%", padding: "20px", borderRadius: "15px"}} align="center">Mint a new SYF NFT! The Syfin NFT Minting process only costs gas (a fraction of FTM), you can set a price in SYF to sell your NFT after minting! All NFTs are uploaded to IPFS for decentralization! We support the media formats of <strong>png, jpeg, gif, mp4, and glb</strong>! Your IPFS hash and NFT metadata is stored on the Fantom blockchain. To sell your NFT and list it on the market, after minting you must go to your NFT details under your collection and then do two transactions to approve and list your NFT!</p>
+                                <p className="text-secondary align-middle my-auto" style={{backgroundColor: "#000", width:"100%", padding: "20px", borderRadius: "15px"}} align="center">Mint a new SYF NFT! The Syfin NFT Minting process only costs gas (a fraction of FTM), you can set a price in SYF to sell your NFT after minting! All NFTs are uploaded to IPFS for decentralization! We support the media formats of <strong>png, jpeg, gif, mp4, and glb</strong>! Your IPFS hash and NFT metadata is stored on the Fantom blockchain. To sell your NFT and list it on the market, after minting you must go to your NFT details under your collection and then do two transactions to approve and list your NFT! JPEGs and PNGs are compressed and optimized for uploading. Max File Size is 50MB.</p>
                                 
                                 </div>
                                 <div className="col-md-6">
@@ -156,6 +227,7 @@ class Mint extends Component {
                                     </div>
                                     </div>
                                     <div className="col-12">
+                                        <div id="compressing" align="center" style={{color: "#fff", marginTop: "65px", display: "none"}}>Compressing your image, please wait...</div>
                                     <div align="center" id="wrapperdiv" className="watermark" style={{display: "none", padding: "40px"}}><img id="output" className="rounded boxshadow" width="100%" style={{display: "none"}} align="center" />
                                     <model-viewer id="outputmodel" className="rounded boxshadow" align="center" alt="SYF 3D NFT" ar ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate camera-controls style={{width:"100%", height: "500px"}}></model-viewer>
                                     <video id="outputvideo" controls="controls" className="rounded boxshadow" align="center" style={{margin: "0 auto"}} width="100%" height="100%" autoPlay="true" loop="true" muted="true" style={{display: "none"}}>
@@ -393,61 +465,134 @@ class Mint extends Component {
             // this.setState({ new_image: file })
             // document.getElementById('fileupload').innerText = file[0].name;
 
-            console.log(file[0])
+            console.log("Uncompressed", file[0])
 
-            var blob = file[0]; // See step 1 above
+            if (file[0].type === 'image/png' || file[0].type === 'image/jpeg') {
 
-            // this.state.new_image = file[0];
-            document.getElementById('fileupload').innerText = file[0].name;
-            var fileReader = new FileReader();
-            fileReader.onloadend = function(evt) {
-            var arr = (new Uint8Array(evt.target.result)).subarray(0, 4);
-            var header = "";
-            for(var i = 0; i < arr.length; i++) {
-                header += arr[i].toString(16);
-            }
-            console.log(header);
-            
-            // Check the file signature against known types
-            // 676c5446 is glb model (gltf-binary)
+                // Display Compressing Text Info
+                var compressmodel = document.getElementById('compressing');
+                compressmodel.style.display = 'block';
 
-            if (file[0].type === 'image/png' || file[0].type === 'image/jpeg' || file[0].type === 'image/gif') {
-                var outputmodel = document.getElementById('outputmodel');
-                outputmodel.style.display = 'none';
-                var outputvideo = document.getElementById('outputvideo');
-                outputvideo.style.display = 'none';
-                var output = document.getElementById('output');
-                var div = document.getElementById('wrapperdiv');
-                div.style.display = 'block';
-                output.style.display = 'block';
-                var mainfile = URL.createObjectURL(file[0]);
-                output.src = mainfile;
-            } else if (file[0].type === 'video/mp4') {
-                var outputmodel = document.getElementById('outputmodel');
-                outputmodel.style.display = 'none';
-                var output = document.getElementById('output');
-                output.style.display = 'none';
-                var outputvideo = document.getElementById('outputvideo');
-                var div = document.getElementById('wrapperdiv');
-                div.style.display = 'block';
-                outputvideo.style.display = 'block';
-                var mainfile = URL.createObjectURL(file[0]);
-                outputvideo.src = mainfile;
-            } else if (header === '676c5446') {
-                var output = document.getElementById('output');
-                output.style.display = 'none';
-                var outputvideo = document.getElementById('outputvideo');
-                outputvideo.style.display = 'none';
-                var outputmodel = document.getElementById('outputmodel');
-                var div = document.getElementById('wrapperdiv');
-                div.style.display = 'block';
-                outputmodel.style.display = 'block';
-                var mainfile = URL.createObjectURL(file[0]);
-                outputmodel.src = mainfile;
-            }
-            
-            };
-            fileReader.readAsArrayBuffer(blob);
+                // Compress the NFT 512kb if png/jpeg/gif
+                imageConversion.compressAccurately(file[0], 512).then(async res=>{
+                    //The res in the promise is a compressed Blob type (which can be treated as a File type) file;
+                    console.log("Compressed", res);
+
+                    compressmodel.style.display = 'none';
+
+                    var blob = res; // See step 1 above
+
+                    // this.state.new_image = file[0];
+                    document.getElementById('fileupload').innerText = file[0].name;
+                    var fileReader = new FileReader();
+                    fileReader.onloadend = function(evt) {
+                    var arr = (new Uint8Array(evt.target.result)).subarray(0, 4);
+                    var header = "";
+                    for(var i = 0; i < arr.length; i++) {
+                        header += arr[i].toString(16);
+                    }
+                    console.log(header);
+                    
+                    // Check the file signature against known types
+                    // 676c5446 is glb model (gltf-binary)
+
+                    if (res.type === 'image/png' || res.type === 'image/jpeg' || res.type === 'image/gif') {
+                        var outputmodel = document.getElementById('outputmodel');
+                        outputmodel.style.display = 'none';
+                        var outputvideo = document.getElementById('outputvideo');
+                        outputvideo.style.display = 'none';
+                        var output = document.getElementById('output');
+                        var div = document.getElementById('wrapperdiv');
+                        div.style.display = 'block';
+                        output.style.display = 'block';
+                        var mainfile = URL.createObjectURL(res);
+                        output.src = mainfile;
+                    } else if (res.type === 'video/mp4') {
+                        var outputmodel = document.getElementById('outputmodel');
+                        outputmodel.style.display = 'none';
+                        var output = document.getElementById('output');
+                        output.style.display = 'none';
+                        var outputvideo = document.getElementById('outputvideo');
+                        var div = document.getElementById('wrapperdiv');
+                        div.style.display = 'block';
+                        outputvideo.style.display = 'block';
+                        var mainfile = URL.createObjectURL(file[0]);
+                        outputvideo.src = mainfile;
+                    } else if (header === '676c5446') {
+                        var output = document.getElementById('output');
+                        output.style.display = 'none';
+                        var outputvideo = document.getElementById('outputvideo');
+                        outputvideo.style.display = 'none';
+                        var outputmodel = document.getElementById('outputmodel');
+                        var div = document.getElementById('wrapperdiv');
+                        div.style.display = 'block';
+                        outputmodel.style.display = 'block';
+                        var mainfile = URL.createObjectURL(file[0]);
+                        outputmodel.src = mainfile;
+                    }
+                    
+                    };
+                    fileReader.readAsArrayBuffer(blob);
+
+                });
+
+        } else {
+                // Don't compress it yet for gif, mp4, and glb mime types, work in progress
+
+                var blob = file[0]; // See step 1 above
+
+                // this.state.new_image = file[0];
+                document.getElementById('fileupload').innerText = file[0].name;
+                var fileReader = new FileReader();
+                fileReader.onloadend = function(evt) {
+                var arr = (new Uint8Array(evt.target.result)).subarray(0, 4);
+                var header = "";
+                for(var i = 0; i < arr.length; i++) {
+                    header += arr[i].toString(16);
+                }
+                console.log(header);
+                
+                // Check the file signature against known types
+                // 676c5446 is glb model (gltf-binary)
+
+                if (file[0].type === 'image/png' || file[0].type === 'image/jpeg' || file[0].type === 'image/gif') {
+                    var outputmodel = document.getElementById('outputmodel');
+                    outputmodel.style.display = 'none';
+                    var outputvideo = document.getElementById('outputvideo');
+                    outputvideo.style.display = 'none';
+                    var output = document.getElementById('output');
+                    var div = document.getElementById('wrapperdiv');
+                    div.style.display = 'block';
+                    output.style.display = 'block';
+                    var mainfile = URL.createObjectURL(file[0]);
+                    output.src = mainfile;
+                } else if (file[0].type === 'video/mp4') {
+                    var outputmodel = document.getElementById('outputmodel');
+                    outputmodel.style.display = 'none';
+                    var output = document.getElementById('output');
+                    output.style.display = 'none';
+                    var outputvideo = document.getElementById('outputvideo');
+                    var div = document.getElementById('wrapperdiv');
+                    div.style.display = 'block';
+                    outputvideo.style.display = 'block';
+                    var mainfile = URL.createObjectURL(file[0]);
+                    outputvideo.src = mainfile;
+                } else if (header === '676c5446') {
+                    var output = document.getElementById('output');
+                    output.style.display = 'none';
+                    var outputvideo = document.getElementById('outputvideo');
+                    outputvideo.style.display = 'none';
+                    var outputmodel = document.getElementById('outputmodel');
+                    var div = document.getElementById('wrapperdiv');
+                    div.style.display = 'block';
+                    outputmodel.style.display = 'block';
+                    var mainfile = URL.createObjectURL(file[0]);
+                    outputmodel.src = mainfile;
+                }
+                
+                };
+                fileReader.readAsArrayBuffer(blob);
+        }
 
         }
         
@@ -455,8 +600,15 @@ class Mint extends Component {
         const handleDrop = (e) => {
             let dt = e.dataTransfer
             let files = dt.files
-            
-            this.setState({ new_image: files[0] })
+            if (files[0].type === 'image/png' || files[0].type === 'image/jpeg') {
+                // Compress the NFT
+                imageConversion.compressAccurately(files[0], 512).then(async res=>{
+                    console.log("Compressed", res);
+                    this.setState({ new_image: res });
+                });
+            } else {
+                this.setState({ new_image: files[0] });
+            }
 
             handleFiles(files)
         }
@@ -548,6 +700,14 @@ class Mint extends Component {
             file = result; // Buffer of Image for IPFS
             mimetype = this.state.new_image.type;
 
+            // 2 MB Max File Size Limit
+            if (file.size > 2000000) {
+                alert('Image size is too large');
+                this.setState({ txpend: false });
+                this.setState({ txs: 0 });
+                return;
+            }
+
             var arr = (new Uint8Array(file)).subarray(0, 4);
             var header = "";
             for(var i = 0; i < arr.length; i++) {
@@ -562,16 +722,16 @@ class Mint extends Component {
 
             console.log(this.state.new_url);
 
-            if (file == null || file == '' || typeof file == 'undefined') {
+            if (file === null || file === '' || typeof file === 'undefined') {
                 // Do nothing if Buffer is empty or null
                 return;
 
-            } else if (this.state.new_url == '' || this.state.new_des == '' || this.state.new_name == '' || this.state.new_category == '' || this.state.new_price == '') {
+            } else if (this.state.new_url === '' || this.state.new_des === '' || this.state.new_name === '' || this.state.new_category === '' || this.state.new_price === '') {
                 alert('Please fill in all fields!');
                 this.setState({ txpend: false })
                 this.setState({ txs: 0 })
                 return;
-            } else if (this.state.isAgree == false) {
+            } else if (this.state.isAgree === false) {
                 alert('Please check the box to agree that the NFT is your IP!');
                 this.setState({ txpend: false })
                 this.setState({ txs: 0 })
@@ -642,6 +802,7 @@ class Mint extends Component {
 
                 // localStorage.setItem(this.state.new_name, hash);
             }
+            
         });
     }
 

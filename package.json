@@ -8,6 +8,7 @@
     "axios": "^0.21.1",
     "file-type": "^16.5.3",
     "fuse.js": "^6.4.6",
+    "image-conversion": "^2.1.1",
     "ipfs-http-client": "^52.0.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
