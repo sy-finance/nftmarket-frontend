@@ -168,7 +168,7 @@ class App extends Component {
 
         <footer id="mainfoot" className="mainfoot page-footer bg-light rounded footer-adj" style={{display: "block"}}>
           <br />
-          <p className="text-center"><img src="/logo.png" border="0" height="100px" /><br /><br />Syfin ERC721 NFT Market on the Fantom Blockchain<br /><span style={{fontSize: "13px"}}>Alpha Version v1.4.1</span></p>
+          <p className="text-center"><img src="/logo.png" border="0" height="100px" /><br /><br />Syfin ERC721 NFT Market on the Fantom Blockchain<br /><span style={{fontSize: "13px"}}>Alpha Version v1.4.2</span></p>
           <p className="text-center text-light foottxt">
             <a href="https://sy.finance" target="_blank">HOME</a> • <a href="https://app.sy.finance" target="_blank">SYF DAPP</a> • <a href="https://twitter.com/syfinance" target="_blank">TWITTER</a> • <a href="https://discord.gg/kq63ZWAJzz" target="_blank">DISCORD</a> • <a href="https://t.me/fantomsyfin" target="_blank">TELEGRAM</a> • <a href="https://syfinance.gitbook.io/sy-finance/" target="_blank">DOCS</a>
             </p>
