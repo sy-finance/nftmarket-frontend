@@ -2,7 +2,9 @@
 
 ![Vercel](https://vercelbadge.vercel.app/api/sy-finance/nftmarket-frontend) ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fsy-finance%2Fnftmarket-frontend&count_bg=%233DA4C8&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)
 
-This is the frontend code/dapp/PWA (Progressive Web App) NFT Market for https://syfin.art
+This is the frontend code/dapp/PWA (Progressive Web App) NFT Marketplace for https://syfin.art on the Fantom (FTM) blockchain network.
+
+We use the https://wraithswap.finance AMM for buying and selling SYF and WRA
 
 Ideally this will be developed out into Next.js from React.js which it is currently..
 

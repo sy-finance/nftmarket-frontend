@@ -1,6 +1,6 @@
 {
   "name": "syfin-nftmarket",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "private": true,
   "proxy": "https://nft.sy.finance/api",
   "dependencies": {
@@ -13,6 +13,7 @@
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
     "react-canvas-confetti": "^1.2.1",
+    "react-cool-img": "^1.2.12",
     "react-dom": "^17.0.2",
     "react-image-compressor": "^1.0.1",
     "react-jazzicon": "^0.1.3",
@@ -34,8 +35,8 @@
     "write-json-file": "^5.0.0"
   },
   "devDependencies": {
-    "truffle": "^5.3.14",
     "@truffle/hdwallet-provider": "^1.4.1",
+    "truffle": "^5.3.14",
     "truffle-plugin-verify": "^0.5.11"
   },
   "scripts": {

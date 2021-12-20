@@ -4,6 +4,8 @@ import SyfinNFTSale from '../../abis/SyfinNFTSale.json';
 import SyfinNFTLikes from '../../abis/SyfinNFTLikes.json';
 import Syfin from '../../abis/Syfin.json';
 
+import Img from "react-cool-img";
+
 import ReactPlaceholder from "react-placeholder";
 import ReactPaginate from 'react-paginate';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
@@ -244,7 +246,7 @@ function Other () {
                                                 {(typeof key.nftData !== 'undefined') ? (
 
                                                 (key.mimeType === "image/jpeg" || key.mimeType === "image/png" || key.mimeType === "image/gif") ? ( 
-                                                    <img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+key.nftData} style={{background: "#000"}}/>
+                                                    <Img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+key.nftData} cache style={{background: "#000"}}/>
                                                 ) : (key.mimeType === "video/mp4") ? (
                                                     <video alt="NFT" className="token rounded" autoPlay playsInline muted loop controls src={"https://ipfs.sy.finance/ipfs/"+key.nftData} type="video/mp4">
                                                     <source src={"https://ipfs.sy.finance/ipfs/"+key.nftData} type="video/mp4"></source>

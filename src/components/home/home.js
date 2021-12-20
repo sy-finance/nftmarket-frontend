@@ -8,6 +8,8 @@ import SyfinAvatars from '../../abis/SyfinAvatars.json';
 import SyfinVerified from '../../abis/SyfinVerified.json';
 import SyfinNFTLikes from '../../abis/SyfinNFTLikes.json';
 
+import Img from "react-cool-img";
+
 import LazyLoad, { forceCheck } from 'react-lazyload';
 
 import Modal from 'react-modal';
@@ -217,7 +219,7 @@ class Home extends Component {
                         {
                             (this.state.owned.length > 0) ? (
                             (this.state.ipfs !== "" && (this.state.mim === "image/jpeg" || this.state.mim === "image/png" || this.state.mim === "image/gif")) ?
-                            (<div style={{position: "relative", width: "45px"}}><img src={"https://ipfs.sy.finance/ipfs/"+this.state.ipfs} alt="" border="0" height="50px" width="50px" style={{borderRadius: "50%"}} />
+                            (<div style={{position: "relative", width: "45px"}}><Img src={"https://ipfs.sy.finance/ipfs/"+this.state.ipfs} cache alt="" border="0" height="50px" width="50px" style={{borderRadius: "50%"}} />
                             
                             {(this.state.feature_verified === true) ? (
                                 <div style={{position: "absolute", bottom: "-3px", right: "-1px"}}><svg width="16" height="16" viewBox="0 0 12 12" fill="#4E78FF" xmlns="http://www.w3.org/2000/svg"><path d="M4.78117 0.743103C5.29164 -0.247701 6.70826 -0.247701 7.21872 0.743103C7.52545 1.33846 8.21742 1.62509 8.8553 1.42099C9.91685 1.08134 10.9186 2.08304 10.5789 3.1446C10.3748 3.78247 10.6614 4.47445 11.2568 4.78117C12.2476 5.29164 12.2476 6.70826 11.2568 7.21872C10.6614 7.52545 10.3748 8.21742 10.5789 8.8553C10.9186 9.91685 9.91685 10.9186 8.8553 10.5789C8.21742 10.3748 7.52545 10.6614 7.21872 11.2568C6.70826 12.2476 5.29164 12.2476 4.78117 11.2568C4.47445 10.6614 3.78247 10.3748 3.1446 10.5789C2.08304 10.9186 1.08134 9.91685 1.42099 8.8553C1.62509 8.21742 1.33846 7.52545 0.743103 7.21872C-0.247701 6.70826 -0.247701 5.29164 0.743103 4.78117C1.33846 4.47445 1.62509 3.78247 1.42099 3.1446C1.08134 2.08304 2.08304 1.08134 3.1446 1.42099C3.78247 1.62509 4.47445 1.33846 4.78117 0.743103Z" fill="#FFF"></path><path fillRule="evenodd" clipRule="evenodd" d="M8.43961 4.23998C8.64623 4.43922 8.65221 4.76823 8.45297 4.97484L5.40604 8.13462L3.54703 6.20676C3.34779 6.00014 3.35377 5.67113 3.56039 5.47189C3.76701 5.27266 4.09602 5.27864 4.29526 5.48525L5.40604 6.63718L7.70475 4.25334C7.90398 4.04672 8.23299 4.04074 8.43961 4.23998Z" fill="#000"></path></svg></div>
@@ -244,7 +246,7 @@ class Home extends Component {
                     {(typeof this.state.iData_nftData !== 'undefined') ? (
 
                     (this.state.iData_mimeType === "image/jpeg" || this.state.iData_mimeType === "image/png" || this.state.iData_mimeType === "image/gif") ? ( 
-                        <img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.iData_nftData} style={{background: "#000"}}/>
+                        <Img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.iData_nftData} cache style={{background: "#000"}}/>
                     ) : (this.state.iData_mimeType === "video/mp4") ? (
                         <video alt="NFT" className="token rounded" autoPlay playsInline muted loop controls src={"https://ipfs.sy.finance/ipfs/"+this.state.iData_nftData} type="video/mp4">
                         <source src={"https://ipfs.sy.finance/ipfs/"+this.state.iData_nftData} type="video/mp4"></source>
@@ -285,7 +287,7 @@ class Home extends Component {
                                                 {(typeof this.state.imageData_nftData[key] !== 'undefined') ? (
 
                                                 (this.state.imageData_mimeType[key] === "image/jpeg" || this.state.imageData_mimeType[key] === "image/png" || this.state.imageData_mimeType[key] === "image/gif") ? ( 
-                                                    <img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} style={{background: "#000"}}/>
+                                                    <Img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} cache style={{background: "#000"}}/>
                                                 ) : (this.state.imageData_mimeType[key] === "video/mp4") ? (
                                                     <video alt="NFT" className="token rounded" autoPlay playsInline muted loop controls src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} type="video/mp4">
                                                     <source src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} type="video/mp4"></source>
@@ -351,7 +353,7 @@ class Home extends Component {
                                                 {(typeof this.state.mimageData_nftData[key] !== 'undefined') ? (
 
                                                 (this.state.mimageData_mimeType[key] === "image/jpeg" || this.state.mimageData_mimeType[key] === "image/png" || this.state.mimageData_mimeType[key] === "image/gif") ? ( 
-                                                    <img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.mimageData_nftData[key]} style={{background: "#000"}}/>
+                                                    <Img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.mimageData_nftData[key]} cache style={{background: "#000"}}/>
                                                 ) : (this.state.mimageData_mimeType[key] === "video/mp4") ? (
                                                     <video alt="NFT" className="token rounded" autoPlay playsInline muted loop controls src={"https://ipfs.sy.finance/ipfs/"+this.state.mimageData_nftData[key]} type="video/mp4">
                                                     <source src={"https://ipfs.sy.finance/ipfs/"+this.state.mimageData_nftData[key]} type="video/mp4"></source>
@@ -433,7 +435,7 @@ class Home extends Component {
                                                 {(typeof this.state.tximageData_nftData[key] !== 'undefined') ? (
 
                                                 (this.state.tximageData_mimeType[key] === "image/jpeg" || this.state.tximageData_mimeType[key] === "image/png" || this.state.tximageData_mimeType[key] === "image/gif") ? ( 
-                                                    <img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.tximageData_nftData[key]} style={{background: "#000"}}/>
+                                                    <Img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.tximageData_nftData[key]} cache style={{background: "#000"}}/>
                                                 ) : (this.state.tximageData_mimeType[key] === "video/mp4") ? (
                                                     <video alt="NFT" className="token rounded" autoPlay playsInline muted loop controls src={"https://ipfs.sy.finance/ipfs/"+this.state.tximageData_nftData[key]} type="video/mp4">
                                                     <source src={"https://ipfs.sy.finance/ipfs/"+this.state.tximageData_nftData[key]} type="video/mp4"></source>

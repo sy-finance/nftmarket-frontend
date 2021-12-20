@@ -6,6 +6,8 @@ import SyfinNFTSale from '../../abis/SyfinNFTSale.json';
 import ReactPlaceholder from "react-placeholder";
 import "react-placeholder/lib/reactPlaceholder.css";
 
+import Img from "react-cool-img";
+
 import {Tabs, Tab} from 'react-bootstrap';
 
 import {
@@ -82,7 +84,7 @@ class MyCollection extends Component {
                                                     {(typeof this.state.imageData_nftData[key] !== 'undefined') ? (
                                                         
                                                     (this.state.imageData_mimeType[key] === "image/jpeg" || this.state.imageData_mimeType[key] === "image/png" || this.state.imageData_mimeType[key] === "image/gif") ? ( 
-                                                        <img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} style={{background: "#000"}} />
+                                                        <Img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} cache style={{background: "#000"}} />
                                                     ) : (
                                                         <video alt="NFT" className="token rounded" autoPlay playsInline muted loop controls src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} type="video/mp4">
                                                         <source src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} type="video/mp4"></source>
@@ -129,7 +131,7 @@ class MyCollection extends Component {
                                                     {(typeof this.state.imageData_nftData[key] !== 'undefined') ? (
 
                                                     (this.state.imageData_mimeType[key] === "image/jpeg" || this.state.imageData_mimeType[key] === "image/png" || this.state.imageData_mimeType[key] === "image/gif") ? ( 
-                                                        <img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} style={{background: "#000"}} />
+                                                        <Img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} cache style={{background: "#000"}} />
                                                     ) : (
                                                         <video alt="NFT" className="token rounded" autoPlay playsInline muted loop controls src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} type="video/mp4">
                                                         <source src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} type="video/mp4"></source>
@@ -178,7 +180,7 @@ class MyCollection extends Component {
                                                     {(typeof this.state.mimageData_nftData[key] !== 'undefined') ? (
                                                         
                                                         (this.state.mimageData_mimeType[key] === "image/jpeg" || this.state.mimageData_mimeType[key] === "image/png" || this.state.mimageData_mimeType[key] === "image/gif") ? ( 
-                                                            <img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.mimageData_nftData[key]} style={{background: "#000"}} />
+                                                            <Img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.mimageData_nftData[key]} cache style={{background: "#000"}} />
                                                         ) : (this.state.mimageData_mimeType[key] === "video/mp4") ? (
                                                             <video alt="NFT" className="token rounded" autoPlay playsInline muted loop controls src={"https://ipfs.sy.finance/ipfs/"+this.state.mimageData_nftData[key]} type="video/mp4">
                                                             <source src={"https://ipfs.sy.finance/ipfs/"+this.state.mimageData_nftData[key]} type="video/mp4"></source>

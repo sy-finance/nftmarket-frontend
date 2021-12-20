@@ -4,6 +4,8 @@ import SyfinNFTSale from '../../abis/SyfinNFTSale.json';
 import SyfinAvatars from '../../abis/SyfinAvatars.json';
 import SyfinVerified from '../../abis/SyfinVerified.json';
 
+import Img from "react-cool-img";
+
 import ReactPlaceholder from "react-placeholder";
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 import "react-placeholder/lib/reactPlaceholder.css";
@@ -54,7 +56,7 @@ class Gifted extends Component {
                                                 {(typeof this.state.imageData_nftData[key] !== 'undefined') ? (
 
                                                     (this.state.imageData_mimeType[key] === "image/jpeg" || this.state.imageData_mimeType[key] === "image/png" || this.state.imageData_mimeType[key] === "image/gif") ? ( 
-                                                        <img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} style={{background: "#000"}}/>
+                                                        <Img alt="NFT" className="token rounded" src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} cache style={{background: "#000"}}/>
                                                     ) : (this.state.imageData_mimeType[key] === "video/mp4") ? (
                                                         <video alt="NFT" className="token rounded" autoPlay playsInline muted loop controls src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} type="video/mp4">
                                                         <source src={"https://ipfs.sy.finance/ipfs/"+this.state.imageData_nftData[key]} type="video/mp4"></source>
