@@ -45,6 +45,9 @@ import Fantums from './fantums/fantums';
 class App extends Component {
 
   async componentWillMount() {
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
     await this.loadWeb3()
   }
 

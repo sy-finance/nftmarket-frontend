@@ -74,6 +74,12 @@
       } else {
         console.log('Service Worker is not supported by browser.');
       }
+
+      $('img').mousedown(function (e) {
+        if(e.button == 2) { // right click
+          return false; // do nothing!
+        }
+      }
     </script>
   </body>
 </html>
