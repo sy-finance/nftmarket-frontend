@@ -12,6 +12,7 @@ import {
 import Home from './home/home';
 import Explore from './explore/explore';
 import Mint from './mint/mint';
+import Draw from './draw/draw';
 import NftDetail from './nft-detail/nft-detail';
 import MyCollection from './my-collection/my-collection';
 import Collection from './collection/collection';
@@ -139,6 +140,9 @@ class App extends Component {
                 </Route>
                 <Route path="/mint">
                   <Mint />
+                </Route>
+                <Route path="/draw">
+                  <Draw />
                 </Route>
                 <Route path="/gs/:id">
                   <Gantom />
